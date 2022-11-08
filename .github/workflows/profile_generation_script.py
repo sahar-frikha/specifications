@@ -66,7 +66,7 @@ def generate_transformed_profile(
             )
             transformed_profile["mapping"].append(new_p)
     else:
-        transformed_profile["type"] = "Type"
+        transformed_profile["spec_type"] = "Type"
 
     ### Generate the metadata
     transformed_profile["name"] = g["@id"].split(":")[1]
@@ -107,7 +107,7 @@ def generate_transformed_profile(
     transformed_profile["json-ld_url"] = arg
     transformed_profile["dde_ui_url"] = "https://discovery.biothings.io/view/"
 
-    if transformed_profile["type"] == "Profile":
+    if transformed_profile["spec_type"] == "Profile":
         if arg.split("-")[1].split(".")[0] == "DRAFT":
             transformed_profile["dde_ui_url"] = (
                 transformed_profile["dde_ui_url"]
