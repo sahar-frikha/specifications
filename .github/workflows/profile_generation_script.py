@@ -511,7 +511,7 @@ for arg in args:
                     out_HTML_file = (
                         folderpath
                         + "/"
-                        + arg.split("/")[-1].split(".")[0].split("_")[0]
+                        + arg.split("/")[-1].split(".")[0].split("_")[-1]
                         + ".html"
                     )
 
