@@ -484,10 +484,12 @@ for arg in args:
                     )
                     # Dictionary of all external definitions
                     dict_definitions = dict()
-                    for d in g["$validation"]["definitions"]:
-                        dict_definitions[d] = g["$validation"]["definitions"][d][
-                            "@type"
-                        ]
+
+                    if "definitions" in g["$validation"]:
+                        for d in g["$validation"]["definitions"]:
+                            dict_definitions[d] = g["$validation"]["definitions"][d][
+                                "@type"
+                            ]
 
                     # For each profile :
                     # Prepare the transfermed profile : spec_info & mapping fields
