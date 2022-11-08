@@ -512,7 +512,7 @@ for arg in args:
                     out_HTML_file = (
                         folderpath
                         + "/"
-                        + arg.split("/")[-1].split(".")[0].split("_v?")[-1]
+                        + arg.split("/")[-1].split(".")[0].split("_")[0]
                         + ".html"
                     )
 
@@ -580,7 +580,7 @@ for arg in args:
                                     SubClass = row[4]
 
                     data = [
-                        uuid.uuid1(),
+                        uuid.uuid3(),
                         "bioschams",
                         profile_name,
                         SubClass,
