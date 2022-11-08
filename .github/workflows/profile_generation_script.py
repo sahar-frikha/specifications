@@ -26,7 +26,7 @@ def generate_transformed_profile(
 
     # Browse properties by marginality and add them to the mappings
     if "$validation" in g.keys():
-        transformed_profile["type"] = "Profile"
+        transformed_profile["spec_type"] = "Profile"
         for req_label in g["$validation"]["required"]:
             prop = g["$validation"]["properties"][req_label]
             new_p = generate_property(
