@@ -490,7 +490,7 @@ for arg in args:
                     # Dictionary of all external definitions
                     dict_definitions = dict()
 
-                    if "$validation" in g.keys() :
+                    if "$validation" in g.keys():
                         for d in g["$validation"]["definitions"]:
                             dict_definitions[d] = g["$validation"]["definitions"][d][
                                 "@type"
@@ -514,7 +514,7 @@ for arg in args:
                     out_HTML_file = (
                         folderpath
                         + "/"
-                        + transformed_profile["spec_info"]["version"]
+                        + arg.split("/")[-1].split(".")[0].split("_")[0]
                         + ".html"
                     )
 
@@ -586,7 +586,7 @@ for arg in args:
                         "bioschams",
                         profile_name,
                         SubClass,
-                        transformed_profile["spec_info"]["version"],
+                        arg.split("/")[-1].split(".")[0].split("_")[0],
                         "https://github.com/BioSchemas/specifications/tree/master/"
                         + arg,
                     ]
