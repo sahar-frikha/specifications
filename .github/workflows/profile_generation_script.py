@@ -265,7 +265,7 @@ def generate_spec_info(g, path_changed_file):
     else:
         spec_info["description"]
 
-    spec_info["version"] = arg.split("/")[-1].split(".")[0].split("_")[0]
+    spec_info["version"] = arg.split("_")[1].split(".json")[0]
 
     if "rdfs:subClassOf" in g.keys():
         spec_info["official_type"] = g["rdfs:subClassOf"]["@id"].split(":")[1]
@@ -485,8 +485,6 @@ for arg in args:
                     # Dictionary of all external definitions
                     dict_definitions = dict()
 
-                    print(g)
-
                     if "$validation" in g.keys():
                         for d in g["$validation"]["definitions"]:
                             dict_definitions[d] = g["$validation"]["definitions"][d][
@@ -509,10 +507,7 @@ for arg in args:
                     )
                     # out_YAML_file = folderpath+"/"+"generated_"+profile_name+".yaml"
                     out_HTML_file = (
-                        folderpath
-                        + "/"
-                        + arg.split("/")[-1].split(".")[0].split("_")[-1]
-                        + ".html"
+                        folderpath + "/" + arg.split("_")[1].split(".json")[0] + ".html"
                     )
 
                     if path.exists(folderpath):
@@ -583,7 +578,7 @@ for arg in args:
                         "bioschams",
                         profile_name,
                         SubClass,
-                        arg.split("/")[-1].split(".")[0].split("_")[0],
+                        arg.split("_")[1].split(".json")[0],
                         "https://github.com/BioSchemas/specifications/tree/master/"
                         + arg,
                     ]
