@@ -575,7 +575,7 @@ for arg in args:
                                     SubClass = row[4]
 
                     data = [
-                        uuid.uuid3(),
+                        uuid.uuid1(),
                         "bioschams",
                         profile_name,
                         SubClass,
