@@ -265,12 +265,7 @@ def generate_spec_info(g, path_changed_file):
     else:
         spec_info["description"]
 
-    if "schema:schemaVersion" in g.keys():
-        spec_info["version"] = g["schema:schemaVersion"][0].split("/")[-1]
-    else:
-        spec_info["version"] = (
-            path_changed_file.split("_")[1].split("v")[1].split(".json")[0]
-        )
+    spec_info["version"] = arg.split("/")[-1].split(".")[0].split("_")[0]
 
     if "rdfs:subClassOf" in g.keys():
         spec_info["official_type"] = g["rdfs:subClassOf"]["@id"].split(":")[1]
