@@ -485,7 +485,9 @@ for arg in args:
                     # Dictionary of all external definitions
                     dict_definitions = dict()
 
-                    if "definitions" in g["$validation"]:
+                    print(g)
+
+                    if "$validation" in g.keys():
                         for d in g["$validation"]["definitions"]:
                             dict_definitions[d] = g["$validation"]["definitions"][d][
                                 "@type"
