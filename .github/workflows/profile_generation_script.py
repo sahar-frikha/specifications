@@ -72,16 +72,16 @@ def generate_transformed_profile(
     transformed_profile["name"] = g["@id"].split(":")[1]
     transformed_profile["use_cases_url"] = "/useCases/" + transformed_profile["name"]
 
-    with open("bioschemas-dde/draft_profile_list.txt") as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=",")
-        line_count = 0
-        for row in csv_reader:
-            line_count += 1
-            if line_count > 1:
-                fields = row[0].split("\t")
-                if fields[1] == transformed_profile["name"]:
-                    # print(f'\n namespace={fields[0]}, name={fields[1]}, subclassof={fields[2]}, type={fields[3]}, version={fields[4]}, url={fields[5]}.')
-                    transformed_profile["spec_type"] = {fields[3]}
+    # with open("bioschemas-dde/draft_profile_list.txt") as csv_file:
+    #     csv_reader = csv.reader(csv_file, delimiter=",")
+    #     line_count = 0
+    #     for row in csv_reader:
+    #         line_count += 1
+    #         if line_count > 1:
+    #             fields = row[0].split("\t")
+    #             if fields[1] == transformed_profile["name"]:
+    #                 # print(f'\n namespace={fields[0]}, name={fields[1]}, subclassof={fields[2]}, type={fields[3]}, version={fields[4]}, url={fields[5]}.')
+    #                 transformed_profile["type"] = {fields[3]}
 
     transformed_profile["previous_version"] = get_previous_version(path_changed_file)
     transformed_profile["previous_release"] = get_previous_release(path_changed_file)
