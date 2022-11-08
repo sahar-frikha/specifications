@@ -192,9 +192,9 @@ def get_previous_release(path_changed_file):
 def get_status(version):
     status = ""
     if version.split("-")[-1] == "DRAFT":
-        status = "Revision"
+        status = "revision"
     elif version.split("-")[-1] == "RELEASE":
-        status = "Deprecated"
+        status = "deprecated"
     return status
 
 
@@ -489,12 +489,10 @@ for arg in args:
                     )
                     # Dictionary of all external definitions
                     dict_definitions = dict()
-
-                    if "$validation" in g.keys():
-                        for d in g["$validation"]["definitions"]:
-                            dict_definitions[d] = g["$validation"]["definitions"][d][
-                                "@type"
-                            ]
+                    for d in g["$validation"]["definitions"]:
+                        dict_definitions[d] = g["$validation"]["definitions"][d][
+                            "@type"
+                        ]
 
                     # For each profile :
                     # Prepare the transfermed profile : spec_info & mapping fields
@@ -514,7 +512,7 @@ for arg in args:
                     out_HTML_file = (
                         folderpath
                         + "/"
-                        + arg.split("/")[-1].split(".")[0].split("_")[0]
+                        + arg.split("/")[-1].split(".")[0].split("_v?")[0]
                         + ".html"
                     )
 
