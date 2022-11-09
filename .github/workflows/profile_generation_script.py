@@ -523,10 +523,11 @@ for arg in args:
                     dict_definitions = dict()
 
                     if "$validation" in g.keys():
-                        for d in g["$validation"]["definitions"]:
-                            dict_definitions[d] = g["$validation"]["definitions"][d][
-                                "@type"
-                            ]
+                        if "definitions" in g["$validation"].keys():
+                            for d in g["$validation"]["definitions"]:
+                                dict_definitions[d] = g["$validation"]["definitions"][d][
+                                    "@type"
+                                ]
 
                     # For each profile :
                     # Prepare the transfermed profile : spec_info & mapping fields
