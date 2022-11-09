@@ -151,39 +151,74 @@ from os import listdir
 from os.path import isfile, join
 
 
-def get_previous_version(path_changed_file):
+def get_previous_version(arg):
     previous_version = ""
 
-    mypath = path_changed_file.split("/")[0] + "/" + path_changed_file.split("/")[1]
+    mypath = arg.split("/")[0] + "/" + arg.split("/")[1] + "/" + arg.split("/")[2]
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
-    max = 0
-    for f in onlyfiles:
-        if f.split("_")[1].split("-")[1].split(".")[0] == "DRAFT":
-            if int(f.split("_")[1].split("-")[0].split(".")[1]) > max:
-                max = int(
-                    f.split("_")[1].split("-")[0].split("v")[1].split(".")[0]
-                    + f.split("_")[1].split("-")[0].split(".")[1]
-                )
-                previous_version = f.split("_")[1].split("v")[1].split(".json")[0]
+    if arg.split("-")[1].split(".")[0] == "DRAFT":
+        # Get the DRAFT just before
+        for f in onlyfiles:
+            if f.split("_")[1].split("-")[1].split(".")[0] == "DRAFT":
+                version = f.split("_")[1].split("v")[1].split("-")[0]  # "O.2"
+                if (
+                    version.split(".")[0]
+                    == arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0]
+                ):
+                    max = arg.split("_")[1].split("v")[1].split("-")[0].split(".")[1]
+                    if version.split(".")[1] < max:
+                        max = version.split(".")[1]
+                        previous_version = f.split("_")[1].split("v")[1]
+
+    elif arg.split("-")[1].split(".")[0] == "RELEASE":
+        # Get simply the last draft
+        for f in onlyfiles:
+            if f.split("_")[1].split("-")[1].split(".")[0] == "DRAFT":
+
+                version = f.split("_")[1].split("v")[1].split("-")[0]  # "O.2"
+
+                if (
+                    int(version.split(".")[0])
+                    == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0])
+                    - 1
+                ):
+                    max = arg.split("_")[1].split("v")[1].split("-")[0].split(".")[1]
+                    if version.split(".")[1] <= max:
+                        max = version.split(".")[1]
+                        previous_version = f.split("_")[1].split("v")[1]
 
     return previous_version
 
 
-def get_previous_release(path_changed_file):
+def get_previous_release(arg):
     previous_release = ""
-    mypath = path_changed_file.split("/")[0] + "/" + path_changed_file.split("/")[1]
+
+    mypath = arg.split("/")[0] + "/" + arg.split("/")[1] + "/" + arg.split("/")[2]
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
-    max = 0
-    for f in onlyfiles:
-        if f.split("_")[1].split("-")[1].split(".")[0] == "RELEASE":
-            if int(f.split("_")[1].split("-")[0].split(".")[0].split("v")[1]) > max:
-                max = int(
-                    f.split("_")[1].split("-")[0].split("v")[1].split(".")[0]
-                    + f.split("_")[1].split("-")[0].split(".")[1]
-                )
-                previous_release = f.split("_")[1].split("v")[1].split(".json")[0]
+    if arg.split("-")[1].split(".")[0] == "DRAFT":
+        # Get the last Release
+        for f in onlyfiles:
+            if f.split("_")[1].split("-")[1].split(".")[0] == "RELEASE":
+                version = f.split("_")[1].split("v")[1].split("-")[0]  # "O.2"
+                if int(version.split(".")[0]) == int(
+                    arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0]
+                ):
+                    previous_release = f.split("_")[1].split("v")[1]
+
+    elif arg.split("-")[1].split(".")[0] == "RELEASE":
+        # Get release just before
+        for f in onlyfiles:
+            if f.split("_")[1].split("-")[1].split(".")[0] == "RELEASE":
+                version = f.split("_")[1].split("v")[1].split("-")[0]  # "O.2"
+
+                if (
+                    int(version.split(".")[0])
+                    == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0])
+                    - 1
+                ):
+                    previous_release = f.split("_")[1].split("v")[1]
 
     return previous_release
 
