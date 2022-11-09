@@ -531,6 +531,10 @@ for arg in args:
                                 dict_definitions[d] = g["$validation"]["definitions"][d][
                                     "@type"
                                 ]
+                        else:
+                            print(Fore.RED + Style.BRIGHT + "WARNING: There was no definitions parsed!")
+                    else:
+                        print(Fore.RED + Style.BRIGHT + "WARNING: There was no $validation to parse!")
 
                     # For each profile :
                     # Prepare the transfermed profile : spec_info & mapping fields
