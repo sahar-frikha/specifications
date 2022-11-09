@@ -384,6 +384,9 @@ def generate_types_cardianlity(g, prop):
         else:
             list_types.append(prop["type"])
 
+    if "$ref" in prop.keys():
+        list_types.append(prop["$ref"])
+
     if "anyOf" in prop.keys():
         for e in prop["anyOf"]:
             if "format" in e.keys():
