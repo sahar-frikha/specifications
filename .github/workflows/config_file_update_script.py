@@ -36,7 +36,10 @@ for arg in args:
     if "jsonld" in arg.split("/"):
         if "json" in arg.split("."):
             arglist = arg.split("/")
-            profile_name = arg.split("/")[-1].split(".")[0].split("_")[0]
+            if len(arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0].split("v"))>0:
+                profile_name = arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0].split("v")[1]
+            else :
+                profile_name = arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0]
             # profile_version = arg.split("_")[1].split("v")[1].split(".json")[0]
             profile_version = arg.split("_")[1].split(".json")[0]
 

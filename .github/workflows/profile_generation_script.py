@@ -265,8 +265,11 @@ def generate_spec_info(g, path_changed_file):
     else:
         spec_info["description"]
 
-    spec_info["version"] = arg.split("_")[1].split(".json")[0]
-
+    if len(arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0].split("v"))>0:
+        spec_info["version"] = arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0].split("v")[1]
+    else :
+        spec_info["version"] = arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0]
+    
     if "rdfs:subClassOf" in g.keys():
         spec_info["official_type"] = g["rdfs:subClassOf"]["@id"].split(":")[1]
     else:
@@ -459,7 +462,13 @@ for arg in args:
     if "jsonld" in arg.split("/"):
         if "json" in arg.split("."):
             arglist = arg.split("/")
-            profile_name = arg.split("/")[-1].split(".")[0].split("_")[0]
+            if len(arg.split("/")[-1].split(".")[0].split("_")[0].split("v")) > 0:
+                profile_name = (
+                    arg.split("/")[-1].split(".")[0].split("_")[0].split("v")[1]
+                )
+            else:
+                profile_name = arg.split("/")[-1].split(".")[0].split("_")[0]
+
             print(Fore.YELLOW + "added/updated profile: " + arg + Style.RESET_ALL)
 
             in_file = "./" + arg
