@@ -169,7 +169,7 @@ def get_previous_version(arg):
                     max = arg.split("_")[1].split("v")[1].split("-")[0].split(".")[1]
                     if version.split(".")[1] < max:
                         max = version.split(".")[1]
-                        previous_version = f.split("_")[1].split("v")[1]
+                        previous_version = f
 
     elif arg.split("-")[1].split(".")[0] == "RELEASE":
         # Get simply the last draft
@@ -186,9 +186,9 @@ def get_previous_version(arg):
                     max = arg.split("_")[1].split("v")[1].split("-")[0].split(".")[1]
                     if version.split(".")[1] <= max:
                         max = version.split(".")[1]
-                        previous_version = f.split("_")[1].split("v")[1]
+                        previous_version = f
 
-    return previous_version.split(".json")[0]
+    return previous_version.split(".json")[0].split("_v")[1]
 
 
 def get_previous_release(arg):
@@ -205,8 +205,7 @@ def get_previous_release(arg):
                 if int(version.split(".")[0]) == int(
                     arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0]
                 ):
-                    previous_release = f.split("_")[1].split("v")[1]
-
+                    previous_release = f
     elif arg.split("-")[1].split(".")[0] == "RELEASE":
         # Get release just before
         for f in onlyfiles:
@@ -218,10 +217,9 @@ def get_previous_release(arg):
                     == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0])
                     - 1
                 ):
-                    previous_release = f.split("_")[1].split("v")[1]
+                    previous_release = f
 
-    return previous_release.split(".json")[0]
-
+    return previous_release.split(".json")[0].split("_v")[1]
 
 # if its draft it's revision, case release, deprecated
 def get_status(version):
@@ -486,7 +484,7 @@ def generate_types_cardianlity(g, prop):
 
     print(Fore.RED + f"Cardinality = {cardianliy}" + Style.RESET_ALL)
 
-    return cardianliy, clean_expected_types
+    return cardianliy, sorted(clean_expected_types)
 
 
 # ## Main Script
@@ -531,13 +529,21 @@ for arg in args:
                     if "$validation" in g.keys():
                         if "definitions" in g["$validation"].keys():
                             for d in g["$validation"]["definitions"]:
-                                dict_definitions[d] = g["$validation"]["definitions"][d][
-                                    "@type"
-                                ]
+                                dict_definitions[d] = g["$validation"]["definitions"][
+                                    d
+                                ]["@type"]
                         else:
-                            print(Fore.RED + Style.BRIGHT + "WARNING: There was no definitions parsed!")
+                            print(
+                                Fore.RED
+                                + Style.BRIGHT
+                                + "WARNING: There was no definitions parsed!"
+                            )
                     else:
-                        print(Fore.RED + Style.BRIGHT + "WARNING: There was no $validation to parse!")
+                        print(
+                            Fore.RED
+                            + Style.BRIGHT
+                            + "WARNING: There was no $validation to parse!"
+                        )
 
                     # For each profile :
                     # Prepare the transfermed profile : spec_info & mapping fields
