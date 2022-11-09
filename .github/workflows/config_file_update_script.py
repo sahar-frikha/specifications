@@ -37,7 +37,7 @@ for arg in args:
         if "json" in arg.split("."):
             arglist = arg.split("/")
             if len(arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0].split("v"))>0:
-                profile_name = arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0].split("v")[1]
+                profile_name = arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0].split("v")[0]
             else :
                 profile_name = arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0]
             # profile_version = arg.split("_")[1].split("v")[1].split(".json")[0]

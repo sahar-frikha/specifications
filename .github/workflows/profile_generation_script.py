@@ -266,7 +266,7 @@ def generate_spec_info(g, path_changed_file):
         spec_info["description"]
 
     if len(arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0].split("v"))>0:
-        spec_info["version"] = arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0].split("v")[1]
+        spec_info["version"] = arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0].split("v")[0]
     else :
         spec_info["version"] = arg.split("/")[-1].split(".")[0].split("_")[0].split(".json")[0]
     
@@ -464,7 +464,7 @@ for arg in args:
             arglist = arg.split("/")
             if len(arg.split("/")[-1].split(".")[0].split("_")[0].split("v")) > 0:
                 profile_name = (
-                    arg.split("/")[-1].split(".")[0].split("_")[0].split("v")[1]
+                    arg.split("/")[-1].split(".")[0].split("_")[0].split("v")[0]
                 )
             else:
                 profile_name = arg.split("/")[-1].split(".")[0].split("_")[0]
