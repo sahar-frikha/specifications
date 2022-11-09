@@ -334,7 +334,7 @@ def generate_property(
     new_p["cardinality"], new_p["expected_types"] = generate_types_cardianlity(g, prop)
 
     if "owl:cardinality" in prop.keys():
-        new_p["cardinality"]=prop["owl:cardinality"]
+        new_p["cardinality"] = prop["owl:cardinality"].upper()
 
     if "description" in prop.keys():
         new_p["description"] = prop["description"]
