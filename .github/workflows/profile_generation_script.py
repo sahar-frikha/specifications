@@ -188,7 +188,7 @@ def get_previous_version(arg):
                         max = version.split(".")[1]
                         previous_version = f.split("_")[1].split("v")[1]
 
-    return previous_version
+    return previous_version.split(".json")[0]
 
 
 def get_previous_release(arg):
@@ -220,7 +220,7 @@ def get_previous_release(arg):
                 ):
                     previous_release = f.split("_")[1].split("v")[1]
 
-    return previous_release
+    return previous_release.split(".json")[0]
 
 
 # if its draft it's revision, case release, deprecated
