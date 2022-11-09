@@ -154,7 +154,7 @@ from os.path import isfile, join
 def get_previous_version(arg):
     previous_version = ""
 
-    mypath = arg.split("/")[0] + "/" + arg.split("/")[1] + "/" + arg.split("/")[2]
+    mypath = arg.split("/")[0] + "/" + arg.split("/")[1]
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
     if arg.split("-")[1].split(".")[0] == "DRAFT":
@@ -194,7 +194,7 @@ def get_previous_version(arg):
 def get_previous_release(arg):
     previous_release = ""
 
-    mypath = arg.split("/")[0] + "/" + arg.split("/")[1] + "/" + arg.split("/")[2]
+    mypath = arg.split("/")[0] + "/" + arg.split("/")[1]
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
     if arg.split("-")[1].split(".")[0] == "DRAFT":
