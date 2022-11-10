@@ -85,7 +85,6 @@ jobs:
           GITHUB_USER: ${{ secrets.GITHUB_USER }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: | 
-          sleep 30
           cd bioschemas.github.io
           git config user.name "sahar-frikha"
           git config user.email "sahar.frikha1@gmail.com"
