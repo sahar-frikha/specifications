@@ -334,6 +334,10 @@ def generate_spec_info(g, path_changed_file):
         str(datetime.datetime.now().date().year)
         + str(datetime.datetime.now().date().month)
         + str(datetime.datetime.now().date().day)
+        + "T"
+        + str(datetime.datetime.now().time().hour)
+        + str(datetime.datetime.now().time().minute)
+        + str(datetime.datetime.now().time().second)
     )
 
     if "rdfs:subClassOf" in g.keys():
