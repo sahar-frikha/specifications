@@ -154,9 +154,9 @@ from os.path import isfile, join
 def get_previous_version(arg):
     previous_version = ""
 
-    mypath = arg.split("/")[0] + "/" + arg.split("/")[1]
+    mypath = arg.split("/")[0] + "/" + arg.split("/")[1] + "/" + arg.split("/")[2]
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
-
+    
     if arg.split("-")[1].split(".")[0] == "DRAFT":
         # Get the DRAFT just before
         for f in onlyfiles:
@@ -166,25 +166,21 @@ def get_previous_version(arg):
                     version.split(".")[0]
                     == arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0]
                 ):
-                    max = (
-                        int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[1])
-                        - 1
-                    )
+                    max = int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[1]) -1
                     if int(version.split(".")[1]) >= max:
                         print(f)
                         previous_version = f.split(".json")[0].split("_v")[1]
-
+                        
     elif arg.split("-")[1].split(".")[0] == "RELEASE":
         # Get simply the last draft
         for f in onlyfiles:
             if f.split("_")[1].split("-")[1].split(".")[0] == "DRAFT":
-
-                version = f.split("_")[1].split("v")[1].split("-")[0]  # "O.2"
-
+                
+                version = f.split("_")[1].split("v")[1].split("-")[0]  # "O.2"                
+                
                 if (
-                    int(version.split(".")[0])
-                    == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0])
-                    - 1
+                    int (version.split(".")[0])
+                    == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0]) -1
                 ):
                     max = arg.split("_")[1].split("v")[1].split("-")[0].split(".")[1]
                     if int(version.split(".")[1]) <= max:
@@ -192,11 +188,10 @@ def get_previous_version(arg):
 
     return previous_version
 
-
 def get_previous_release(arg):
     previous_release = ""
-
-    mypath = arg.split("/")[0] + "/" + arg.split("/")[1]
+    
+    mypath = arg.split("/")[0] + "/" + arg.split("/")[1] + "/" + arg.split("/")[2]
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
     if arg.split("-")[1].split(".")[0] == "DRAFT":
@@ -204,12 +199,13 @@ def get_previous_release(arg):
         for f in onlyfiles:
             if f.split("_")[1].split("-")[1].split(".")[0] == "RELEASE":
                 version = f.split("_")[1].split("v")[1].split("-")[0]  # "O.2"
-                if int(version.split(".")[0]) == int(
-                    arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0]
+                if (
+                    int (version.split(".")[0])
+                    == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0])
                 ):
-
+                    
                     previous_release = f.split(".json")[0].split("_v")[1]
-
+                    
     elif arg.split("-")[1].split(".")[0] == "RELEASE":
         # Get release just before
         for f in onlyfiles:
@@ -218,10 +214,9 @@ def get_previous_release(arg):
 
                 if (
                     int(version.split(".")[0])
-                    == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0])
-                    - 1
+                    == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0]) -1
                 ):
-                    previous_release = f.split(".json")[0].split("_v")[1]
+                    previous_release = f.split(".json")[0].split("_v")[1]               
 
     return previous_release
 
