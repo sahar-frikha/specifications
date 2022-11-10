@@ -578,113 +578,112 @@ for arg in args:
                                 + Style.BRIGHT
                                 + "WARNING: There was no definitions parsed!"
                             )
+                        # For each profile :
+                        # Prepare the transfermed profile : spec_info & mapping fields
+                        transformed_profile = generate_transformed_profile(
+                            data, g, arg, external_properties, dict_definitions
+                        )
+
+                        # Inject the YAML in a HTML File
+                        # Note: The folder should be in the transformed_profile["spec_info"]["title"] folder
+
+                        ### PROBLEM: if the forlder "profile name" doesn't exist it will throw an exception, so we need to create it manually
+
+                        folderpath = (
+                            "./" + website_repo + "/pages/_profiles/" + profile_name
+                        )
+                        # out_YAML_file = folderpath+"/"+"generated_"+profile_name+".yaml"
+                        out_HTML_file = (
+                            folderpath
+                            + "/"
+                            + arg.split("/")[-1].split(".json")[0].split("v")[-1]
+                            + ".html"
+                        )
+
+                        if path.exists(folderpath):
+                            print("folder esists")
+                        else:
+                            # os.makedirs(os.path.dirname(folderpath), exist_ok=True)
+                            Path(folderpath).mkdir(parents=True, exist_ok=True)
+                            print("Create folder : ", folderpath)
+
+                        # with open(out_YAML_file, "w", encoding="utf-8") as o:
+                        #    yaml.dump(transformed_profile, o)
+
+                        # print(Style.BRIGHT + "Transformed profiles Generated and saved in " + out_YAML_file + Style.RESET_ALL)
+
+                        message = """---
+# spec_info content generated using GOWeb
+# DO NOT MANUALLY EDIT THE CONTENT
+"""
+                        with open(out_HTML_file, "w", encoding="utf-8") as o:
+                            o.write(message)
+                            yaml.dump(transformed_profile, o)
+                            o.write("---")
+
+                        print(
+                            Style.BRIGHT
+                            + "HTML Profile page created "
+                            + out_HTML_file
+                            + Style.RESET_ALL
+                        )
+
+                        ############# DDE REPOSITORY #############
+                        dde_folderpath = "./bioschemas-dde/latest-updated-profiles"
+                        if path.exists(dde_folderpath):
+                            print("Folder latest-updated-profiles exists in DDE")
+                        else:
+                            # os.makedirs(os.path.dirname(folderpath), exist_ok=True)
+                            Path(dde_folderpath).mkdir(parents=True, exist_ok=True)
+                            print("Create folder in DDE: ", dde_folderpath)
+
+                        latest_updated_profiles = (
+                            dde_folderpath + "/" + profile_name + ".csv"
+                        )
+
+                        header = [
+                            "time",
+                            "namespace",
+                            "name",
+                            "subclassOf",
+                            "version",
+                            "url",
+                        ]
+
+                        SubClass = ""
+
+                        with open(
+                            "bioschemas.github.io/_data/metadata_mapping.csv"
+                        ) as csv_file:
+                            csv_reader = csv.reader(csv_file, delimiter=",")
+                            line_count = 0
+                            for row in csv_reader:
+                                line_count += 1
+                                if line_count > 1:
+                                    if row[0] == profile_name:
+                                        SubClass = row[4]
+
+                        data = [
+                            uuid.uuid1(),
+                            "bioschams",
+                            profile_name,
+                            SubClass,
+                            arg.split("_")[1].split(".json")[0],
+                            "https://github.com/BioSchemas/specifications/tree/master/"
+                            + arg,
+                        ]
+
+                        with open(latest_updated_profiles, "w", encoding="utf-8") as f:
+                            writer = csv.writer(f)
+
+                            # write the header
+                            writer.writerow(header)
+
+                            # write the data
+                            writer.writerow(data)
                     else:
                         print(
                             Fore.RED
                             + Style.BRIGHT
                             + "WARNING: There was no $validation to parse!"
                         )
-
-                    # For each profile :
-                    # Prepare the transfermed profile : spec_info & mapping fields
-                    transformed_profile = generate_transformed_profile(
-                        data, g, arg, external_properties, dict_definitions
-                    )
-
-                    # Inject the YAML in a HTML File
-                    # Note: The folder should be in the transformed_profile["spec_info"]["title"] folder
-
-                    ### PROBLEM: if the forlder "profile name" doesn't exist it will throw an exception, so we need to create it manually
-
-                    folderpath = (
-                        "./" + website_repo + "/pages/_profiles/" + profile_name
-                    )
-                    # out_YAML_file = folderpath+"/"+"generated_"+profile_name+".yaml"
-                    out_HTML_file = (
-                        folderpath
-                        + "/"
-                        + arg.split("/")[-1].split(".json")[0].split("v")[-1]
-                        + ".html"
-                    )
-
-                    if path.exists(folderpath):
-                        print("folder esists")
-                    else:
-                        # os.makedirs(os.path.dirname(folderpath), exist_ok=True)
-                        Path(folderpath).mkdir(parents=True, exist_ok=True)
-                        print("Create folder : ", folderpath)
-
-                    # with open(out_YAML_file, "w", encoding="utf-8") as o:
-                    #    yaml.dump(transformed_profile, o)
-
-                    # print(Style.BRIGHT + "Transformed profiles Generated and saved in " + out_YAML_file + Style.RESET_ALL)
-
-                    message = """---
-# spec_info content generated using GOWeb
-# DO NOT MANUALLY EDIT THE CONTENT
-"""
-                    with open(out_HTML_file, "w", encoding="utf-8") as o:
-                        o.write(message)
-                        yaml.dump(transformed_profile, o)
-                        o.write("---")
-
-                    print(
-                        Style.BRIGHT
-                        + "HTML Profile page created "
-                        + out_HTML_file
-                        + Style.RESET_ALL
-                    )
-
-                    ############# DDE REPOSITORY #############
-                    dde_folderpath = "./bioschemas-dde/latest-updated-profiles"
-                    if path.exists(dde_folderpath):
-                        print("Folder latest-updated-profiles exists in DDE")
-                    else:
-                        # os.makedirs(os.path.dirname(folderpath), exist_ok=True)
-                        Path(dde_folderpath).mkdir(parents=True, exist_ok=True)
-                        print("Create folder in DDE: ", dde_folderpath)
-
-                    latest_updated_profiles = (
-                        dde_folderpath + "/" + profile_name + ".csv"
-                    )
-
-                    header = [
-                        "time",
-                        "namespace",
-                        "name",
-                        "subclassOf",
-                        "version",
-                        "url",
-                    ]
-
-                    SubClass = ""
-
-                    with open(
-                        "bioschemas.github.io/_data/metadata_mapping.csv"
-                    ) as csv_file:
-                        csv_reader = csv.reader(csv_file, delimiter=",")
-                        line_count = 0
-                        for row in csv_reader:
-                            line_count += 1
-                            if line_count > 1:
-                                if row[0] == profile_name:
-                                    SubClass = row[4]
-
-                    data = [
-                        uuid.uuid1(),
-                        "bioschams",
-                        profile_name,
-                        SubClass,
-                        arg.split("_")[1].split(".json")[0],
-                        "https://github.com/BioSchemas/specifications/tree/master/"
-                        + arg,
-                    ]
-
-                    with open(latest_updated_profiles, "w", encoding="utf-8") as f:
-                        writer = csv.writer(f)
-
-                        # write the header
-                        writer.writerow(header)
-
-                        # write the data
-                        writer.writerow(data)
