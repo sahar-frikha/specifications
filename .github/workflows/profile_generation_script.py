@@ -166,21 +166,25 @@ def get_previous_version(arg):
                     version.split(".")[0]
                     == arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0]
                 ):
-                    max = int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[1]) -1
+                    max = (
+                        int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[1])
+                        - 1
+                    )
                     if int(version.split(".")[1]) >= max:
                         print(f)
                         previous_version = f.split(".json")[0].split("_v")[1]
-                        
+
     elif arg.split("-")[1].split(".")[0] == "RELEASE":
         # Get simply the last draft
         for f in onlyfiles:
             if f.split("_")[1].split("-")[1].split(".")[0] == "DRAFT":
-                
-                version = f.split("_")[1].split("v")[1].split("-")[0]  # "O.2"                
-                
+
+                version = f.split("_")[1].split("v")[1].split("-")[0]  # "O.2"
+
                 if (
-                    int (version.split(".")[0])
-                    == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0]) -1
+                    int(version.split(".")[0])
+                    == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0])
+                    - 1
                 ):
                     max = arg.split("_")[1].split("v")[1].split("-")[0].split(".")[1]
                     if int(version.split(".")[1]) <= max:
