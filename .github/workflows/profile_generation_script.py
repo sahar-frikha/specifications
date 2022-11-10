@@ -160,40 +160,62 @@ def get_previous_version(arg):
     if arg.split("-")[1].split(".")[0] == "DRAFT":
         print("Get the DRAFT just before")
         arg_version = arg.split("_")[1].split("v")[1].split("-")[0]
-        max= int(arg_version.split(".")[1])-1
-        curent_previous_version=0
+        max = int(arg_version.split(".")[1]) - 1
+        curent_previous_version = 0
         for f in onlyfiles:
             if f.split("_")[1].split("-")[1].split(".")[0] == "DRAFT":
                 file_version = f.split("_")[1].split("v")[1].split("-")[0]
-                if (
-                    int(file_version.split(".")[0])
-                    == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0])
+                if int(file_version.split(".")[0]) == int(
+                    arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0]
                 ):
-                    if int(file_version.split(".")[1]) <= max and int(file_version.split(".")[1])> curent_previous_version :
+                    if (
+                        int(file_version.split(".")[1]) <= max
+                        and int(file_version.split(".")[1]) > curent_previous_version
+                    ):
                         previous_version = f.split(".json")[0].split("_v")[1]
-                        curent_previous_version = int(f.split(".json")[0].split("_v")[1].split("-")[0].split(".")[1])
-                        
+                        curent_previous_version = int(
+                            f.split(".json")[0]
+                            .split("_v")[1]
+                            .split("-")[0]
+                            .split(".")[1]
+                        )
+
     elif arg.split("-")[1].split(".")[0] == "RELEASE":
         print("Get simply the last draft")
         arg_version = arg.split("_")[1].split("v")[1].split("-")[0]
-        max= int(arg_version.split(".")[1])
-        curent_previous_version=0
+        max = int(arg_version.split(".")[1])
+        curent_previous_version = 0
 
         for f in onlyfiles:
             if f.split("_")[1].split("-")[1].split(".")[0] == "DRAFT":
                 file_version = f.split("_v")[1].split("-")[0]
                 if (
-                    int (file_version.split(".")[0])
-                    == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0]) -1
+                    int(file_version.split(".")[0])
+                    == int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[0])
+                    - 1
                 ):
-                    
-                    if (int (file_version.split(".")[1]) 
-                        <= int(arg.split("_")[1].split("v")[1].split("-")[0].split(".")[1]) -1
+
+                    if (
+                        int(file_version.split(".")[1])
+                        <= int(
+                            arg.split("_")[1].split("v")[1].split("-")[0].split(".")[1]
+                        )
+                        - 1
                     ):
-                        if int(file_version.split(".")[1]) <= max and int(file_version.split(".")[1])> curent_previous_version :
+                        if (
+                            int(file_version.split(".")[1]) <= max
+                            and int(file_version.split(".")[1])
+                            > curent_previous_version
+                        ):
                             previous_version = f.split(".json")[0].split("_v")[1]
-                            curent_previous_version = int(f.split(".json")[0].split("_v")[1].split("-")[0].split(".")[1])
+                            curent_previous_version = int(
+                                f.split(".json")[0]
+                                .split("_v")[1]
+                                .split("-")[0]
+                                .split(".")[1]
+                            )
     return previous_version
+
 
 def get_previous_release(arg):
     previous_release = ""
