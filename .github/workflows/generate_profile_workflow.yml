@@ -108,6 +108,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: | 
           cd bioschemas-dde
+          git config --local user.email "tpe-bot@github.com"
+          git config --local user.name "Tools Platform Ecosystem bot"
           git config user.name "sahar-frikha"
           git config user.email "sahar.frikha1@gmail.com"
           git status
